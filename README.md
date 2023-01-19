@@ -19,7 +19,7 @@ Install the necessary packages.
 ```
 npm install
 ```
-Generate the interfaces
+Start your replica
 ```
 dfx start
 ```
