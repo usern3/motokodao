@@ -16,6 +16,9 @@ export async function plugConnection() {
     throw new Error("User denied the connection")
   }
   const p = await window.ic.plug.agent.getPrincipal()
+  p.id = await window.ic.plug.principalId
+
+  console.log(p)
 
   const agent = new HttpAgent({
     host: process.env.NODE_ENV === "development" ? "http://localhost:8000" : "https://ic0.app",
@@ -30,6 +33,7 @@ export async function plugConnection() {
     canisterId: daoCanisterId,
   });
 
+  console.log(actor)
   principal.update(() => p)
   daoActor.update(() => actor)
 }

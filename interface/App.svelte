@@ -50,27 +50,22 @@
     display: flex;
     justify-content: space-between;
   }
-
   button {
     font-weight: 600;
     background-color: #4c4a4a;
   }
-
   .slogan {
     font-size: 1.7em;
     margin-bottom: 0;
     color: #ffffff;
   }
-
   .twitter {
     font-size: 0.4em;
     color: #ffffff;
   }
-
   a {
     color: inherit;
   }
-
   .twitterfoot {
     position: fixed;
     color: #ffffff;
@@ -80,14 +75,12 @@
     font-size: 1em;
     font-weight: 600;
   }
-
   .App-logo {
     height: 14vmin;
     pointer-events: none;
     transform: scale(1);
     animation: pulse 3s infinite;
   }
-
   footer {
     position: fixed;
     bottom: 0;
@@ -99,7 +92,6 @@
     height: 5vmin;
     pointer-events: none;
   }
-
   .App-header {
     height: calc(100vh - 70px);
     display: flex;
@@ -108,20 +100,17 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
   }
-
   .examples {
     padding: 30px 100px;
     display: grid;
     grid-gap: 30px;
     grid-template-columns: 1fr 1fr 1fr;
   }
-
   .examples-title {
     font-size: 1.3em;
     margin-bottom: 0;
     text-align: center;
   }
-
   .example {
     padding: 50px 50px;
     min-height: 300px;
@@ -131,12 +120,10 @@
     justify-content: center;
     border-radius: 15px;
   }
-
   .example-disabled {
     font-size: 1.3em;
     color: #ffffff;
   }
-
   .demo-button {
     background: #a02480;
     padding: 0 1.3em;
@@ -149,12 +136,10 @@
     cursor: pointer;
     color: white;
   }
-
   .demo-button:active {
     color: white;
     background: #979799;
   }
-
   .auth-section {
     padding: 0.4em;
     display: flex;
@@ -168,24 +153,20 @@
     border-radius: 50px;
     border: 2px solid rgb(222, 221, 221);
   }
-
   @keyframes pulse {
     0% {
       transform: scale(0.97);
       opacity: 0;
     }
-
     70% {
       transform: scale(1);
       opacity: 1;
     }
-
     100% {
       transform: scale(0.97);
       opacity: 0;
     }
   }
-
   .connexion {
     margin: 40px auto;
     width: 100%;

@@ -1,7 +1,6 @@
 <script>
   import { proposaltoVote } from "../stores.js"
   import { hasvoted } from "../stores.js"
-  import mot from "../assets/mot.png"
   import { get } from "svelte/store"
   import { daoActor, principal } from "../stores"
 
@@ -63,7 +62,6 @@
 
 <div class="votemain">
   {#if $principal}
-    <img src={mot} class="bg" alt="logo" />
     {#if $proposaltoVote.proposalID === "null"}
       <h1 class="slogan">Please input a proposal ID!</h1>
       <input

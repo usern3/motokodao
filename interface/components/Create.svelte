@@ -1,7 +1,6 @@
 <script>
   import { daoActor, principal } from "../stores"
   import { get } from "svelte/store"
-  import mot from "../assets/mot.png"
   let choosenproposal = "Input your proposal"
 
   let summary
@@ -29,7 +28,6 @@
 
 <div class="votemain">
   {#if $principal}
-    <img src={mot} class="bg" alt="logo" />
     <h1 class="slogan">Create a proposal</h1>
     <input
       bind:value={choosenproposal}

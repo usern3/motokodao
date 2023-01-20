@@ -14,7 +14,11 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "next",
+    "autoprefixer": "^10.4.13",
     "buffer": "^6.0.3",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.3",
+    "prettier-plugin-motoko": "^0.3.1",
     "svelte": "^3.42.5",
     "svelte-preprocess": "^4.10.7",
     "svelte-sidebar-menu": "^0.9.12",
