@@ -11,6 +11,7 @@ import Buffer "mo:base/Buffer";
 actor {
   stable var next_proposal_id : Nat = 0;
   stable var proposals : [Types.Proposal] = [];
+  
   var proposal_buff = Buffer.fromArray<Types.Proposal>(proposals);
 
   func proposal_put(id : Nat, proposal : Types.Proposal) {
@@ -34,7 +35,7 @@ actor {
     };
 
     proposal_put(proposal_id, proposal);
-    #ok(proposal_id)
+    return #ok(proposal_id)
   };
 
   public shared ({ caller }) func vote(proposal_id : Int, yes_or_no : Bool) : async Types.Result<(Nat, Nat), Text> {
@@ -42,8 +43,7 @@ actor {
   };
 
   public query func get_proposal(id : Nat) : async Types.Result<Types.Proposal, Text> {
-    let p = proposal_buff.get(id - 1);
-    return #ok(p);
+    return #ok(proposal_buff.get(id));
   };
 
   public query func get_all_proposals() : async Types.Result<[Types.Proposal], Text> {

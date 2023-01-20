@@ -21,8 +21,8 @@
   {:then proposals}
     <div id="proposals">
       <h1>Proposals</h1>
-      {#each proposals as post}
-        <Proposal {post} />
+      {#each proposals.ok as proposal}
+        <Proposal proposal={proposal} />
       {/each}
     </div>
   {:catch error}

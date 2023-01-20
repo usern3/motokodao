@@ -1,16 +1,16 @@
 <script>
-  export let post
+  export let proposal
 </script>
 
-<div class="post-preview">
-  <h2>{post[0]}</h2>
-  <p>{post[1].creator.owner.toString()}</p>
-  <p>Change website text to: {post[1].payload}</p>
-  <p>
-    Yes: {(post[1].votes[0] / BigInt(100000000)).toString()}, No: {(
-      post[1].votes[1] / BigInt(100000000)
+<div class="proposal-preview">
+  <h2>{proposal.payload.title}</h2>
+  <p>{proposal.proposer}</p>
+  <p>{proposal.payload.body} </p>
+  <!-- <p>
+    Yes: {(proposal[1].votes[0] / BigInt(100000000)).toString()}, No: {(
+      proposal[1].votes[1] / BigInt(100000000)
     ).toString()}
-  </p>
+  </p> -->
 </div>
 
 <style>

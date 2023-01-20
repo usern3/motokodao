@@ -1,37 +1,36 @@
 export const idlFactory = ({ IDL }) => {
-  const Subaccount = IDL.Vec(IDL.Nat8);
-  const Account = IDL.Record({
-    'owner' : IDL.Principal,
-    'subaccount' : IDL.Opt(Subaccount),
+  const List = IDL.Rec();
+  const Tokens = IDL.Record({ 'amount_e8s' : IDL.Nat });
+  List.fill(IDL.Opt(IDL.Tuple(IDL.Principal, List)));
+  const ProposalState = IDL.Variant({
+    'open' : IDL.Null,
+    'rejected' : IDL.Null,
+    'accepted' : IDL.Null,
+    'failed' : IDL.Text,
   });
+  const ProposalPayload = IDL.Record({ 'title' : IDL.Text, 'body' : IDL.Text });
   const Proposal = IDL.Record({
-    'status' : IDL.Variant({
-      'Passed' : IDL.Null,
-      'Open' : IDL.Null,
-      'Rejected' : IDL.Null,
-    }),
-    'creator' : Account,
-    'votes' : IDL.Tuple(IDL.Nat, IDL.Nat),
+    'id' : IDL.Nat,
+    'votes_no' : Tokens,
+    'voters' : List,
+    'state' : ProposalState,
     'timestamp' : IDL.Int,
-    'payload' : IDL.Text,
+    'proposer' : IDL.Principal,
+    'votes_yes' : Tokens,
+    'payload' : ProposalPayload,
+  });
+  const Result_3 = IDL.Variant({ 'ok' : IDL.Vec(Proposal), 'err' : IDL.Text });
+  const Result_2 = IDL.Variant({ 'ok' : Proposal, 'err' : IDL.Text });
+  const Result_1 = IDL.Variant({ 'ok' : IDL.Nat, 'err' : IDL.Text });
+  const Result = IDL.Variant({
+    'ok' : IDL.Tuple(IDL.Nat, IDL.Nat),
+    'err' : IDL.Text,
   });
   return IDL.Service({
-    'get_all_proposals' : IDL.Func(
-        [],
-        [IDL.Vec(IDL.Tuple(IDL.Int, Proposal))],
-        ['query'],
-      ),
-    'get_proposal' : IDL.Func([IDL.Int], [IDL.Opt(Proposal)], ['query']),
-    'submit_proposal' : IDL.Func(
-        [IDL.Text],
-        [IDL.Variant({ 'Ok' : Proposal, 'Err' : IDL.Text })],
-        [],
-      ),
-    'vote' : IDL.Func(
-        [IDL.Int, IDL.Bool],
-        [IDL.Variant({ 'Ok' : IDL.Tuple(IDL.Nat, IDL.Nat), 'Err' : IDL.Text })],
-        [],
-      ),
+    'get_all_proposals' : IDL.Func([], [Result_3], ['query']),
+    'get_proposal' : IDL.Func([IDL.Nat], [Result_2], ['query']),
+    'submit_proposal' : IDL.Func([ProposalPayload], [Result_1], []),
+    'vote' : IDL.Func([IDL.Int, IDL.Bool], [Result], []),
   });
 };
 export const init = ({ IDL }) => { return []; };
