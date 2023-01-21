@@ -4,13 +4,11 @@ import Nat "mo:base/Nat";
 import List "mo:base/List";
 import Principal "mo:base/Principal";
 import Buffer "mo:base/Buffer";
-import Trie "mo:base/Trie";
 import HashMap "mo:base/HashMap";
-import Hash "mo:base/Hash";
 
 module {
   public type Result<T, E> = Result.Result<T, E>;
-  public type Account = { owner : Principal; tokens : Tokens };
+  public type Account = { owner : Principal; };
   public type Tokens = { amount_e8s : Nat };
 
   public type SystemParams = {
@@ -72,5 +70,4 @@ module {
   };
 
   public type Subaccount = Blob;
-
 }

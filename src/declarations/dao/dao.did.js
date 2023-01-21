@@ -27,6 +27,7 @@ export const idlFactory = ({ IDL }) => {
     'err' : IDL.Text,
   });
   return IDL.Service({
+    'getTokenBal' : IDL.Func([IDL.Principal], [IDL.Nat], []),
     'get_all_proposals' : IDL.Func([], [Result_3], ['query']),
     'get_proposal' : IDL.Func([IDL.Nat], [Result_2], ['query']),
     'submit_proposal' : IDL.Func([ProposalPayload], [Result_1], []),

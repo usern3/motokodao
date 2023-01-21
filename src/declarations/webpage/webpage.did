@@ -1,2 +1,4 @@
 service : {
+  getSiteMessage: () -> (text) query;
+  setSiteMessage: (text) -> (text);
 }

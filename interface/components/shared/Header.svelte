@@ -45,9 +45,9 @@ const handleHome = () => {
       <div>
         {#if $principal}
           <div
-            class="ml-1 flex items-center gap-x-2 rounded-xl bg-gray-200 px-4 py-2 text-white">
+            class="ml-1 flex items-center gap-x-2 rounded-xl text-sm bg-gray-200 px-4 py-2 text-zinc-700">
             <svg
-              class="h-5 w-5"
+              class="h-4 w-4 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512">
               <path

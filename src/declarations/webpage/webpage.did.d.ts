@@ -1,4 +1,7 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 
-export interface _SERVICE {}
+export interface _SERVICE {
+  'getSiteMessage' : ActorMethod<[], string>,
+  'setSiteMessage' : ActorMethod<[string], string>,
+}

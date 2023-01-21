@@ -51,6 +51,7 @@ type List =
        List;
      };
 service : {
+  getTokenBal: (principal) -> (nat);
   get_all_proposals: () -> (Result_3) query;
   get_proposal: (nat) -> (Result_2) query;
   submit_proposal: (ProposalPayload) -> (Result_1);

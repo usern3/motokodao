@@ -27,6 +27,7 @@ export type Result_3 = { 'ok' : Array<Proposal> } |
   { 'err' : string };
 export interface Tokens { 'amount_e8s' : bigint }
 export interface _SERVICE {
+  'getTokenBal' : ActorMethod<[Principal], bigint>,
   'get_all_proposals' : ActorMethod<[], Result_3>,
   'get_proposal' : ActorMethod<[bigint], Result_2>,
   'submit_proposal' : ActorMethod<[ProposalPayload], Result_1>,
