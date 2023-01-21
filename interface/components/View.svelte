@@ -21,7 +21,7 @@ let promise = get_all_proposals();
       <p>Loading...</p>
     {:then proposals}
       <div>
-        <h1 class="text-black">Proposals</h1>
+        <h1 class="text-black mb-4 text-xl uppercase font-black">Proposals</h1>
         {#each proposals.ok as proposal}
           <Proposal proposal="{proposal}" />
         {/each}

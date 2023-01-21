@@ -2,9 +2,10 @@
 import { daoActor, principal } from "../stores";
 import { get } from "svelte/store";
 import icpLogo from "../assets/icplogo.gif";
+import oldMan from "../assets/oldmanicp.gif";
 
-let proposalBody = "Input your proposal body here";
-let proposalTitle = "Proposal title";
+let proposalBody;
+let proposalTitle;
 
 let summary;
 
@@ -31,7 +32,7 @@ function handleCreateClick(title, body) {
 
 <div class="mt-10 flex gap-x-4">
   <div class="flex items-center justify-center">
-    <img class="w-62" src="{icpLogo}" alt="icplogo" />
+    <img class="w-80" src="{oldMan}" alt="icplogo" />
   </div>
   <div class="flex flex-wrap items-center gap-y-8">
     {#if $principal}
@@ -49,7 +50,7 @@ function handleCreateClick(title, body) {
         <p class="w-full" style="color: red">{error.message}</p>
       {/await}
 
-      <div class="flex w-full flex-wrap gap-y-4">
+      <div class="flex w-full flex-wrap gap-y-4 justify-center">
         <input
           bind:value="{proposalTitle}"
           class="w-full border border-black px-2 py-2"
@@ -59,7 +60,7 @@ function handleCreateClick(title, body) {
           class="w-full border border-black px-2 py-2"
           placeholder="Input your proposal summary here"></textarea>
         <button
-          class="w-full border bg-white px-4 py-2 text-black hover:border-none hover:bg-lime-400 hover:shadow-hard"
+          class="w-3/4 border bg-white px-4 py-2 text-black hover:border-none hover:bg-lime-400 hover:shadow-hard"
           on:click="{handleCreateClick(proposalTitle, proposalBody)}"
           >Create</button>
       </div>

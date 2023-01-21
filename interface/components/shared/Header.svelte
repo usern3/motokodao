@@ -18,7 +18,7 @@ const handleHome = () => {
 };
 </script>
 
-<header class="mb-8 bg-gray-50 text-black">
+<header class="mb-8 bg-zinc-100 text-black">
   <nav class="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Top">
     <div class="flex w-full items-center justify-between py-6 lg:border-none">
       <h1 class="text-4xl font-black">DAO</h1>
