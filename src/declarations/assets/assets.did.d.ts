@@ -61,18 +61,18 @@ export interface _SERVICE {
   'authorize' : ActorMethod<[Principal], undefined>,
   'certified_tree' : ActorMethod<
     [{}],
-    { 'certificate' : Uint8Array, 'tree' : Uint8Array },
+    { 'certificate' : Uint8Array, 'tree' : Uint8Array }
   >,
   'clear' : ActorMethod<[ClearArguments], undefined>,
   'commit_batch' : ActorMethod<
     [{ 'batch_id' : BatchId, 'operations' : Array<BatchOperationKind> }],
-    undefined,
+    undefined
   >,
   'create_asset' : ActorMethod<[CreateAssetArguments], undefined>,
   'create_batch' : ActorMethod<[{}], { 'batch_id' : BatchId }>,
   'create_chunk' : ActorMethod<
     [{ 'content' : Uint8Array, 'batch_id' : BatchId }],
-    { 'chunk_id' : ChunkId },
+    { 'chunk_id' : ChunkId }
   >,
   'delete_asset' : ActorMethod<[DeleteAssetArguments], undefined>,
   'get' : ActorMethod<
@@ -83,7 +83,7 @@ export interface _SERVICE {
       'content_type' : string,
       'content_encoding' : string,
       'total_length' : bigint,
-    },
+    }
   >,
   'get_chunk' : ActorMethod<
     [
@@ -94,12 +94,12 @@ export interface _SERVICE {
         'content_encoding' : string,
       },
     ],
-    { 'content' : Uint8Array },
+    { 'content' : Uint8Array }
   >,
   'http_request' : ActorMethod<[HttpRequest], HttpResponse>,
   'http_request_streaming_callback' : ActorMethod<
     [StreamingCallbackToken],
-    [] | [StreamingCallbackHttpResponse],
+    [] | [StreamingCallbackHttpResponse]
   >,
   'list' : ActorMethod<
     [{}],
@@ -116,7 +116,7 @@ export interface _SERVICE {
         >,
         'content_type' : string,
       }
-    >,
+    >
   >,
   'set_asset_content' : ActorMethod<[SetAssetContentArguments], undefined>,
   'store' : ActorMethod<
@@ -129,7 +129,7 @@ export interface _SERVICE {
         'content_encoding' : string,
       },
     ],
-    undefined,
+    undefined
   >,
   'unset_asset_content' : ActorMethod<[UnsetAssetContentArguments], undefined>,
 }

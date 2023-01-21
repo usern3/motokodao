@@ -53,5 +53,24 @@ module {
   };
 
   public let oneToken = { amount_e8s = 10_000_000 };
-  public let zeroToken = { amount_e8s = 0 }
+  public let zeroToken = { amount_e8s = 0 };
+
+  public type NeuronState = {
+    #Locked;
+    #Dissolving;
+    #Dissolved;
+  };
+
+  public type Neuron = {
+    owner: Principal;
+    amount: Nat;
+    dissolveDelay: Int;
+    neuronState: NeuronState;
+    createdAt: Int;
+    dissolvedAt: Int;
+    depositSubaccount: Subaccount;
+  };
+
+  public type Subaccount = Blob;
+
 }

@@ -8,17 +8,16 @@
       "main": "./src/dao/main.mo",
       "type": "motoko"
     },
+    "ledger": {
+      "main": "src/ledger/main.mo",
+      "type": "motoko"
+    },
     "assets": {
-      "dependencies": [
-        "webpage",
-        "dao"
-      ],
+      "dependencies": ["webpage", "dao"],
       "frontend": {
         "entrypoint": "dist/index.html"
       },
-      "source": [
-        "dist/"
-      ],
+      "source": ["dist/"],
       "type": "assets"
     }
   },
@@ -33,9 +32,7 @@
       "type": "ephemeral"
     },
     "ic": {
-      "providers": [
-        "https://mainnet.dfinity.network"
-      ],
+      "providers": ["https://mainnet.dfinity.network"],
       "type": "persistent"
     }
   },
