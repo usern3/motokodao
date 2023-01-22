@@ -24,7 +24,7 @@ export const idlFactory = ({ IDL }) => {
   });
   const Result_3 = IDL.Variant({ 'ok' : IDL.Vec(Proposal), 'err' : IDL.Text });
   const Result_2 = IDL.Variant({ 'ok' : IDL.Opt(Proposal), 'err' : IDL.Text });
-  const Result_1 = IDL.Variant({ 'ok' : IDL.Nat, 'err' : IDL.Text });
+  const Result_1 = IDL.Variant({ 'ok' : IDL.Text, 'err' : IDL.Text });
   const Result = IDL.Variant({ 'ok' : IDL.Bool, 'err' : IDL.Text });
   return IDL.Service({
     'get_all_proposals' : IDL.Func([], [Result_3], ['query']),

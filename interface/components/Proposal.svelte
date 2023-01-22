@@ -3,7 +3,7 @@ export let proposal;
 console.log(proposal);
 </script>
 
-<div class="flex flex-wrap gap-y-4">
+<div class="w-full flex flex-wrap gap-y-4">
   <div class="w-full">
     <h2 class="flex items-center gap-y-2 font-bold">
       <span class="mr-2 align-baseline text-xs font-black uppercase"
@@ -30,10 +30,11 @@ console.log(proposal);
         >{Object.keys(proposal.state)[0]}</span>
     </div>
   </div>
-    <div class="w-full flex gap-x-2 items-center">
-      <h3 class="text-xs font-black uppercase">Vote</h3>
-      <div class="w-1/2 flex gap-x-2"><button class="w-full bg-red-200 hover:bg-red-500 text-black hover:text-black px-4 py-2 hover:shadow-hard text-sm hover:uppercase hover:font-black">Reject</button></div>
-      <div class="w-1/2"><button class="w-full bg-lime-200 hover:bg-lime-400 text-black hover:text-black px-4 py-2 hover:shadow-hard text-sm hover:uppercase hover:font-black">Approve</button></div>
+    <div class="w-full flex gap-x-2 items-center gap-y-2 flex-wrap">
+      <h3 class="w-full text-xs font-black uppercase">Vote</h3>
+      
+      <div class="w-full flex gap-x-2"><button class="w-full bg-red-200 hover:bg-red-500 text-black hover:text-black px-4 py-2 hover:shadow-hard text-sm hover:uppercase hover:font-black">Reject</button>
+      <button class="w-full bg-lime-200 hover:bg-lime-400 text-black hover:text-black px-4 py-2 hover:shadow-hard text-sm hover:uppercase hover:font-black">Approve</button></div>
     </div>
 </div>
 <!-- <p>

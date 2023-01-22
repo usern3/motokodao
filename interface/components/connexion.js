@@ -3,13 +3,12 @@ import { daoActor } from "../stores"
 import { idlFactory as idlFactoryDAO } from "../../src/declarations/dao/dao.did.js"
 
 //TODO : Add your mainnet id whenever you have deployed on the IC
-const daoCanisterId = 
-  process.env.NODE_ENV === "development" ? "ryjl3-tyaaa-aaaaa-aaaba-cai" : "r4mib-6yaaa-aaaaj-qaztq-cai"
+const daoCanisterId =
+  process.env.NODE_ENV === "development"
+    ? "ryjl3-tyaaa-aaaaa-aaaba-cai"
+    : "bnmyt-3iaaa-aaaal-qbsja-cai";
 
 // See https://docs.plugwallet.ooo/ for more informations
-// This code is not clean but does the job
-// The documentation recommends to use the official methods to create the agent and not rely on the libraries from dfinity
-// But: local dev is broken if I use the official methods...
 export async function plugConnection() {
   const result = await window.ic.plug.requestConnect({
     whitelist: [daoCanisterId],

@@ -1,7 +1,6 @@
 <script>
 import { daoActor, principal } from "../stores";
 import { get } from "svelte/store";
-import icpLogo from "../assets/icplogo.gif";
 import oldMan from "../assets/oldmanicp.gif";
 
 let proposalButtonText;
@@ -17,8 +16,8 @@ async function create_proposal(summarypayload) {
     return;
   }
   let res = await dao.submit_proposal(summarypayload);
-  if (res.Ok) {
-    return res.Ok;
+  if (res.ok) {
+    return res.ok;
   } else {
     throw new Error(res.Err);
   }
@@ -45,7 +44,7 @@ function handleCreateClick(title, buttonText) {
       {:then proposal}
         {#if proposal}
           <p class="w-full">
-            Proposal created with payload {proposal}
+            {proposal}
           </p>
         {/if}
       {:catch error}

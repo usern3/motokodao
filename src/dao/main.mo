@@ -42,7 +42,7 @@ func natHash(n : Nat) : Hash.Hash {
     return await Ledger.icrc1_balance_of({ owner = id; });
   };
 
-  public shared ({ caller }) func submit_proposal(payload : Types.ProposalPayload) : async Types.Result<Nat, Text> {
+  public shared ({ caller }) func submit_proposal(payload : Types.ProposalPayload) : async Types.Result<Text, Text> {
     Debug.print("Principal: " # Principal.toText(caller));
     let proposal_id = next_proposal_id;
     next_proposal_id += 1;
@@ -59,7 +59,7 @@ func natHash(n : Nat) : Hash.Hash {
     };
 
     proposal_put(proposal);
-    return #ok(proposal_id);
+    return #ok("Proposal ID " # Nat.toText(proposal_id) # " created successfully.");
   };
 
   public shared ({ caller }) func vote(proposal_id : Nat, yes_or_no : Bool) : async Types.Result<Bool, Text> {

@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  plugins: [require("flowbite/plugin")],
+  plugins: [],
   theme: {
     extend: {
       boxShadow: {
@@ -90,8 +90,6 @@ module.exports = {
   content: [
     "./index.html",
     "./interface/**/*.{svelte,js,ts}",
-    "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
-    "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
   ], // for unused CSS
   variants: {
     extend: {},

@@ -12,7 +12,7 @@ type Result_2 =
 type Result_1 = 
  variant {
    err: text;
-   ok: nat;
+   ok: text;
  };
 type Result = 
  variant {

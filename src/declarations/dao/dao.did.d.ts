@@ -19,7 +19,7 @@ export type ProposalState = { 'open' : null } |
   { 'failed' : string };
 export type Result = { 'ok' : boolean } |
   { 'err' : string };
-export type Result_1 = { 'ok' : bigint } |
+export type Result_1 = { 'ok' : string } |
   { 'err' : string };
 export type Result_2 = { 'ok' : [] | [Proposal] } |
   { 'err' : string };
