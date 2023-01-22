@@ -3,16 +3,18 @@ import Proposal from "./Proposal.svelte";
 import { get } from "svelte/store";
 import { daoActor, principal } from "../stores";
 
-async function get_all_proposals() {
+async function get_proposals() {
   let dao = get(daoActor);
+  console.log(dao);
   if (!dao) {
     return;
   }
+  console.log("Principal", principal);
   let res = await dao.get_all_proposals();
   console.log("Proposals", res);
   return res;
 }
-let promise = get_all_proposals();
+let promise = get_proposals();
 </script>
 
 <div class="text-black">

@@ -4,13 +4,15 @@ import { get } from "svelte/store";
 import icpLogo from "../assets/icplogo.gif";
 import oldMan from "../assets/oldmanicp.gif";
 
-let proposalBody;
+let proposalButtonText;
 let proposalTitle;
 
 let summary;
 
+
 async function create_proposal(summarypayload) {
   let dao = get(daoActor);
+  console.log(dao)
   if (!dao) {
     return;
   }
@@ -22,27 +24,27 @@ async function create_proposal(summarypayload) {
   }
 }
 
-let promise = create_proposal(summary);
+let promise;
 
-function handleCreateClick(title, body) {
-  summary = { title: title, body: body };
+function handleCreateClick(title, buttonText) {
+  summary = { title: title, button_text: buttonText };
   promise = create_proposal(summary);
 }
 </script>
 
-<div class="mt-10 flex gap-x-4">
+<div class="flex gap-x-4">
   <div class="flex items-center justify-center">
     <img class="w-80" src="{oldMan}" alt="icplogo" />
   </div>
-  <div class="flex flex-wrap items-center gap-y-8">
+  <div class="flex flex-wrap items-center">
     {#if $principal}
-      <h1 class="slogan w-full text-3xl font-bold">New Proposal</h1>
+      <h1 class="w-full text-3xl font-bold">New Proposal</h1>
 
       {#await promise}
-        <p class="w-full" style="color: white">...waiting</p>
+        <p class="w-full">...waiting</p>
       {:then proposal}
         {#if proposal}
-          <p class="w-full" style="color: white">
+          <p class="w-full">
             Proposal created with payload {proposal}
           </p>
         {/if}
@@ -55,17 +57,17 @@ function handleCreateClick(title, body) {
           bind:value="{proposalTitle}"
           class="w-full border border-black px-2 py-2"
           placeholder="Proposal title" />
-        <textarea
-          bind:value="{proposalBody}"
+        <input
+          bind:value="{proposalButtonText}"
           class="w-full border border-black px-2 py-2"
-          placeholder="Input your proposal summary here"></textarea>
+          placeholder="Update text to..." />
         <button
           class="w-3/4 border bg-white px-4 py-2 text-black hover:border-none hover:bg-lime-400 hover:shadow-hard"
-          on:click="{handleCreateClick(proposalTitle, proposalBody)}"
+          on:click="{handleCreateClick(proposalTitle, proposalButtonText)}"
           >Create</button>
       </div>
     {:else}
-      <p class="example-disabled">
+      <p>
         Connect with a wallet to create a new proposal.
       </p>
     {/if}

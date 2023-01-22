@@ -41,7 +41,7 @@ module {
 
   public type ProposalPayload = {
     title : Text;
-    body : Text;
+    button_text : Text;
   };
 
   public type DaoStableStorage = {

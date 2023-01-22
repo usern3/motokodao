@@ -7,7 +7,7 @@ type Result_3 =
 type Result_2 = 
  variant {
    err: text;
-   ok: Proposal;
+   ok: opt Proposal;
  };
 type Result_1 = 
  variant {
@@ -17,10 +17,7 @@ type Result_1 =
 type Result = 
  variant {
    err: text;
-   ok: record {
-         nat;
-         nat;
-       };
+   ok: bool;
  };
 type ProposalState = 
  variant {
@@ -31,7 +28,7 @@ type ProposalState =
  };
 type ProposalPayload = 
  record {
-   body: text;
+   button_text: text;
    title: text;
  };
 type Proposal = 
@@ -51,9 +48,9 @@ type List =
        List;
      };
 service : {
-  getTokenBal: (principal) -> (nat);
   get_all_proposals: () -> (Result_3) query;
+  get_mb_balance: (principal) -> (nat);
   get_proposal: (nat) -> (Result_2) query;
   submit_proposal: (ProposalPayload) -> (Result_1);
-  vote: (int, bool) -> (Result);
+  vote: (nat, bool) -> (Result);
 }

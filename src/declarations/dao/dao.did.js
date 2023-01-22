@@ -8,7 +8,10 @@ export const idlFactory = ({ IDL }) => {
     'accepted' : IDL.Null,
     'failed' : IDL.Text,
   });
-  const ProposalPayload = IDL.Record({ 'title' : IDL.Text, 'body' : IDL.Text });
+  const ProposalPayload = IDL.Record({
+    'title' : IDL.Text,
+    'button_text' : IDL.Text,
+  });
   const Proposal = IDL.Record({
     'id' : IDL.Nat,
     'votes_no' : Tokens,
@@ -20,18 +23,15 @@ export const idlFactory = ({ IDL }) => {
     'payload' : ProposalPayload,
   });
   const Result_3 = IDL.Variant({ 'ok' : IDL.Vec(Proposal), 'err' : IDL.Text });
-  const Result_2 = IDL.Variant({ 'ok' : Proposal, 'err' : IDL.Text });
+  const Result_2 = IDL.Variant({ 'ok' : IDL.Opt(Proposal), 'err' : IDL.Text });
   const Result_1 = IDL.Variant({ 'ok' : IDL.Nat, 'err' : IDL.Text });
-  const Result = IDL.Variant({
-    'ok' : IDL.Tuple(IDL.Nat, IDL.Nat),
-    'err' : IDL.Text,
-  });
+  const Result = IDL.Variant({ 'ok' : IDL.Bool, 'err' : IDL.Text });
   return IDL.Service({
-    'getTokenBal' : IDL.Func([IDL.Principal], [IDL.Nat], []),
     'get_all_proposals' : IDL.Func([], [Result_3], ['query']),
+    'get_mb_balance' : IDL.Func([IDL.Principal], [IDL.Nat], []),
     'get_proposal' : IDL.Func([IDL.Nat], [Result_2], ['query']),
     'submit_proposal' : IDL.Func([ProposalPayload], [Result_1], []),
-    'vote' : IDL.Func([IDL.Int, IDL.Bool], [Result], []),
+    'vote' : IDL.Func([IDL.Nat, IDL.Bool], [Result], []),
   });
 };
 export const init = ({ IDL }) => { return []; };
