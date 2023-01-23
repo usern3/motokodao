@@ -1,23 +1,30 @@
 type Tokens = nat;
-type Result_3 = 
- variant {
-   err: text;
-   ok: vec Proposal;
+type StaticProposal = 
+ record {
+   content: text;
+   id: nat;
+   proposer: principal;
+   state: ProposalState;
+   timestamp: int;
+   title: text;
+   voters: List;
+   votes_no: Tokens;
+   votes_yes: Tokens;
  };
 type Result_2 = 
  variant {
    err: text;
-   ok: opt Proposal;
+   ok: vec StaticProposal;
  };
 type Result_1 = 
  variant {
    err: text;
-   ok: text;
+   ok: StaticProposal;
  };
 type Result = 
  variant {
    err: text;
-   ok: bool;
+   ok: text;
  };
 type ProposalState = 
  variant {
@@ -26,31 +33,15 @@ type ProposalState =
    open;
    rejected;
  };
-type ProposalPayload = 
- record {
-   button_text: text;
-   title: text;
- };
-type Proposal = 
- record {
-   id: nat;
-   payload: ProposalPayload;
-   proposer: principal;
-   state: ProposalState;
-   timestamp: int;
-   voters: List;
-   votes_no: Tokens;
-   votes_yes: Tokens;
- };
 type List = 
  opt record {
        principal;
        List;
      };
 service : {
-  get_all_proposals: () -> (Result_3) query;
+  get_all_proposals: () -> (Result_2) query;
   get_mb_balance: (principal) -> (nat);
-  get_proposal: (nat) -> (Result_2) query;
-  submit_proposal: (ProposalPayload) -> (Result_1);
+  get_proposal: (nat) -> (Result_1) query;
+  submit_proposal: (text, text) -> (Result);
   vote: (nat, bool) -> (Result);
 }

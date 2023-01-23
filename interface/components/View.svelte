@@ -31,6 +31,6 @@ let promise = get_all_proposals();
       <p style="color: red">{error.message}</p>
     {/await}
   {:else}
-    <p class="example-disabled">Connect with a wallet to access this example</p>
+    <p class="example-disabled">Connect with a wallet to view proposals</p>
   {/if}
 </div>

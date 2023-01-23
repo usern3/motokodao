@@ -5,6 +5,7 @@ import List "mo:base/List";
 import Principal "mo:base/Principal";
 import Buffer "mo:base/Buffer";
 import HashMap "mo:base/HashMap";
+import Proposal "./Proposal";
 
 module {
   public type Result<T, E> = Result.Result<T, E>;
@@ -20,39 +21,6 @@ module {
     // otherwise it is lost. This prevents users from submitting superfluous proposals.
     proposal_submission_deposit : Tokens
   };
-
-  public type Proposal = {
-    id : Nat;
-    voters : List.List<Principal>;
-    state : ProposalState;
-    timestamp : Int;
-    proposer : Principal;
-    votes_yes : Tokens;
-    votes_no : Tokens;
-    payload : ProposalPayload
-  };
-
-  public type ProposalState = {
-    #failed : Text;
-    #open;
-    #rejected;
-    #accepted
-  };
-
-  public type ProposalPayload = {
-    title : Text;
-    button_text : Text;
-  };
-
-  public type DaoStableStorage = {
-    accounts : [Account];
-    proposals : [Proposal];
-    system_params : SystemParams
-  };
-
-  public let one_token : Tokens = 100_000_000;
-  public let one_hundred_tokens : Tokens = 10_000_000_000;
-  public let zero_token : Tokens = 0;
 
   public type NeuronState = {
     #Locked;

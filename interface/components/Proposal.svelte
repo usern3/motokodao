@@ -21,13 +21,13 @@ function statusClass(state) {
     <h2 class="flex items-center gap-y-2 font-bold">
       <span class="mr-2 align-baseline text-xs font-black uppercase"
         >Title:
-      </span>{proposal.payload.title}
+      </span>{proposal.title}
     </h2>
     
   </div>
   <div class="w-full flex gap-y-2 items-center">
     <h3 class="text-xs font-black uppercase mr-2">Update to:</h3>
-    <p class="">{proposal.payload.button_text}</p>
+    <p class="">{proposal.content}</p>
   </div>
   <div class="flex flex-wrap items-center gap-y-4 gap-x-2">
     <div class="w-full flex items-center">

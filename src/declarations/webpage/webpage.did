@@ -38,5 +38,5 @@ type HeaderField =
  };
 service : {
   http_request: (HttpRequest) -> (HttpResponse) query;
-  set_last_proposal: (nat) -> () oneway;
+  set_text: (text) -> ();
 }

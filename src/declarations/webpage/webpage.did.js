@@ -34,7 +34,7 @@ export const idlFactory = ({ IDL }) => {
   });
   return IDL.Service({
     'http_request' : IDL.Func([HttpRequest], [HttpResponse], ['query']),
-    'set_last_proposal' : IDL.Func([IDL.Nat], [], ['oneway']),
+    'set_text' : IDL.Func([IDL.Text], [], []),
   });
 };
 export const init = ({ IDL }) => { return []; };

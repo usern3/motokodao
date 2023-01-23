@@ -3,18 +3,18 @@ import { daoActor, principal } from "../stores";
 import { get } from "svelte/store";
 import oldMan from "../assets/oldmanicp.gif";
 
-let proposalButtonText;
+let proposalContent;
 let proposalTitle;
 let summary;
 let promise;
 
-async function create_proposal(summarypayload) {
+async function create_proposal(title, content) {
   let dao = get(daoActor);
   console.log(dao);
   if (!dao) {
     return;
   }
-  let res = await dao.submit_proposal(summarypayload);
+  let res = await dao.submit_proposal(title, content);
   if (res.ok) {
     return res.ok;
   } else {
@@ -22,9 +22,8 @@ async function create_proposal(summarypayload) {
   }
 }
 
-function handleCreateClick(title, buttonText) {
-  summary = { title: title, button_text: buttonText };
-  promise = create_proposal(summary);
+function handleCreateClick(title, content) {
+  promise = create_proposal(title, content);
 }
 </script>
 
@@ -54,12 +53,12 @@ function handleCreateClick(title, buttonText) {
           class="w-full border border-black px-2 py-2"
           placeholder="Proposal title" />
         <input
-          bind:value="{proposalButtonText}"
+          bind:value="{proposalContent}"
           class="w-full border border-black px-2 py-2"
           placeholder="Update text to..." />
         <button
           class="w-3/4 border bg-white px-4 py-2 text-black hover:border-none hover:bg-lime-400 hover:shadow-hard"
-          on:click="{handleCreateClick(proposalTitle, proposalButtonText)}"
+          on:click="{handleCreateClick(proposalTitle, proposalContent)}"
           >Create</button>
       </div>
     {:else}
