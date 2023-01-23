@@ -1,6 +1,19 @@
 <script>
+import Vote from "./Vote.svelte";
 export let proposal;
-console.log(proposal);
+
+function statusClass(state) {
+  let base = "rounded-full bg-lime-400 px-2 text-sm text-black "
+  let fmtdState = Object.keys(state)[0]
+
+  if (fmtdState === "rejected") {
+    return base + "bg-red-200 text-red-800"
+  } else if (fmtdState === "accepted") {
+    return base + "bg-lime-400"
+  } else {
+    return base + "bg-gray-200"
+  }
+}
 </script>
 
 <div class="w-full flex flex-wrap gap-y-4">
@@ -26,16 +39,11 @@ console.log(proposal);
     <div class="flex items-center">
       <span class="mr-2 align-baseline text-xs font-black uppercase"
         >Status:
-      </span><span class="rounded-full bg-lime-400 px-2 text-sm text-black"
+      </span><span class={statusClass(proposal.state)}
         >{Object.keys(proposal.state)[0]}</span>
     </div>
   </div>
-    <div class="w-full flex gap-x-2 items-center gap-y-2 flex-wrap">
-      <h3 class="w-full text-xs font-black uppercase">Vote</h3>
-      
-      <div class="w-full flex gap-x-2"><button class="w-full bg-red-200 hover:bg-red-500 text-black hover:text-black px-4 py-2 hover:shadow-hard text-sm hover:uppercase hover:font-black">Reject</button>
-      <button class="w-full bg-lime-200 hover:bg-lime-400 text-black hover:text-black px-4 py-2 hover:shadow-hard text-sm hover:uppercase hover:font-black">Approve</button></div>
-    </div>
+    <Vote proposal={proposal} />
 </div>
 <!-- <p>
     Yes: {(proposal[1].votes[0] / BigInt(100000000)).toString()}, No: {(

@@ -1,107 +1,56 @@
 <script>
-import { proposaltoVote } from "../stores.js";
-import { hasvoted } from "../stores.js";
 import { get } from "svelte/store";
 import { daoActor, principal } from "../stores";
 
-let choosenproposal = "";
-let choosenvote = "";
-let voteid = "";
-let id = "";
+let yesOrNo = "";
+export let proposal;
+let hasVoted = false;
 
-async function vote(thisid, votepayload) {
+async function vote(votepayload) {
   let dao = get(daoActor);
   if (!dao) {
     return;
   }
-  let res = await dao.vote(BigInt(thisid), votepayload);
-  if (res.Ok) {
-    return res.Ok;
+  let res = await dao.vote(BigInt(proposal.id), votepayload);
+  if (res.ok) {
+    return res.ok;
   } else {
-    throw new Error(res.Err);
-  }
-}
-async function get_proposal(thisid) {
-  let dao = get(daoActor);
-  if (!dao) {
-    return;
-  }
-  let res = await dao.get_proposal(BigInt(thisid));
-  if (res.length !== 0) {
-    return res[0];
-  } else {
-    throw new Error(
-      "Could not find this proposal, make sure you typed in the right ID",
-    );
+    throw new Error(res.err);
   }
 }
 
-let promise = vote(voteid, choosenvote);
-let promise2 = get_proposal(id);
+let promise = vote(yesOrNo);
 
 function handleVoteClick(payload) {
-  choosenvote = payload;
-  voteid = id;
-  promise = vote(voteid, choosenvote);
-  $hasvoted = true;
-}
-
-function handleProposalCheck(payload) {
-  id = payload;
-  promise2 = get_proposal(id);
-}
-
-//I assume the vote Yes/No will be represented as True/False
-function setProposal(x) {
-  $proposaltoVote.proposalID = x;
-  if (x != "null") {
-    handleProposalCheck(x);
-  }
+  yesOrNo = payload;
+  promise = vote(yesOrNo);
+  hasVoted = true;
 }
 </script>
 
-<div class="votemain">
-  {#if $principal}
-    {#if $proposaltoVote.proposalID === "null"}
-      <h1 class="slogan">Please input a proposal ID!</h1>
-      <input
-        bind:value="{choosenproposal}"
-        placeholder="Input your proposal ID here" />
-      <button on:click="{setProposal(choosenproposal)}">Vote!</button>
-    {:else if $proposaltoVote.proposalID != "null"}
-      {#await promise2}
+<div class="flex w-full flex-wrap items-center gap-x-2 gap-y-2">
+  <h3 class="w-full text-xs font-black uppercase">Vote</h3>
+  <div class="flex w-full gap-x-2">
+    <button
+      on:click="{() => handleVoteClick(false)}"
+      class="w-full bg-red-200 px-4 py-2 text-sm text-black hover:bg-red-500 hover:font-black hover:uppercase hover:text-black hover:shadow-hard"
+      >Reject</button>
+    <button
+      on:click="{() => handleVoteClick(true)}"
+      class="w-full bg-lime-200 px-4 py-2 text-sm text-black hover:bg-lime-400 hover:font-black hover:uppercase hover:text-black hover:shadow-hard"
+      >Approve</button>
+  </div>
+  <div class="w-10/12">
+    {#if hasVoted === true}
+      {#await promise}
         <h1 class="slogan">Loading...</h1>
-      {:then res}
-        <div class="votingdiv">
-          <h1 class="slogan">
-            You are voting on proposal ID: {$proposaltoVote.proposalID}
-          </h1>
-          <div>
-            <h1 class="slogan">Cast your vote:</h1>
-            <button on:click="{() => handleVoteClick(true)}">Yes</button>
-            <button on:click="{() => handleVoteClick(false)}">No</button>
-            {#if $hasvoted === true}
-              {#await promise}
-                <h1 class="slogan">Loading...</h1>
-              {:then res2}
-                <p style="color: white">
-                  Voted successfully! Current votes: {res2}
-                </p>
-              {:catch error}
-                <p style="color: red">{error.message}</p>
-              {/await}
-            {/if}
-          </div>
-          <button on:click="{() => setProposal('null')}"
-            >Choose new proposal</button>
-        </div>
+      {:then res2}
+        <p style="text-black">
+          Voted successfully! Current votes: {res2}
+        </p>
       {:catch error}
-        <button on:click="{() => setProposal('null')}"
-          >Wrong Proposal ID, click here to reset</button>
-        <p style="color: red">{error.message}</p>
+        <p class="text-red-600">{error.message}</p>
       {/await}
     {/if}
-  {:else}
-    <p class="example-disabled">Connect with a wallet to access this example</p>
-  {/if}
+  </div>
 </div>

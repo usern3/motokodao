@@ -1,6 +1,6 @@
 export const idlFactory = ({ IDL }) => {
   const List = IDL.Rec();
-  const Tokens = IDL.Record({ 'amount_e8s' : IDL.Nat });
+  const Tokens = IDL.Nat;
   List.fill(IDL.Opt(IDL.Tuple(IDL.Principal, List)));
   const ProposalState = IDL.Variant({
     'open' : IDL.Null,

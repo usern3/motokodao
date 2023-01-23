@@ -25,7 +25,7 @@ export type Result_2 = { 'ok' : [] | [Proposal] } |
   { 'err' : string };
 export type Result_3 = { 'ok' : Array<Proposal> } |
   { 'err' : string };
-export interface Tokens { 'amount_e8s' : bigint }
+export type Tokens = bigint;
 export interface _SERVICE {
   'get_all_proposals' : ActorMethod<[], Result_3>,
   'get_mb_balance' : ActorMethod<[Principal], bigint>,

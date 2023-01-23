@@ -5,13 +5,12 @@ import oldMan from "../assets/oldmanicp.gif";
 
 let proposalButtonText;
 let proposalTitle;
-
 let summary;
-
+let promise;
 
 async function create_proposal(summarypayload) {
   let dao = get(daoActor);
-  console.log(dao)
+  console.log(dao);
   if (!dao) {
     return;
   }
@@ -22,8 +21,6 @@ async function create_proposal(summarypayload) {
     throw new Error(res.Err);
   }
 }
-
-let promise;
 
 function handleCreateClick(title, buttonText) {
   summary = { title: title, button_text: buttonText };
@@ -51,7 +48,7 @@ function handleCreateClick(title, buttonText) {
         <p class="w-full" style="color: red">{error.message}</p>
       {/await}
 
-      <div class="flex w-full flex-wrap gap-y-4 justify-center">
+      <div class="flex w-full flex-wrap justify-center gap-y-4">
         <input
           bind:value="{proposalTitle}"
           class="w-full border border-black px-2 py-2"
@@ -66,9 +63,7 @@ function handleCreateClick(title, buttonText) {
           >Create</button>
       </div>
     {:else}
-      <p>
-        Connect with a wallet to create a new proposal.
-      </p>
+      <p>Connect with a wallet to create a new proposal.</p>
     {/if}
   </div>
 </div>

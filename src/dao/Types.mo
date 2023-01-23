@@ -9,7 +9,7 @@ import HashMap "mo:base/HashMap";
 module {
   public type Result<T, E> = Result.Result<T, E>;
   public type Account = { owner : Principal; };
-  public type Tokens = { amount_e8s : Nat };
+  public type Tokens = Nat;
 
   public type SystemParams = {
     // The amount of tokens needed to vote "yes" to accept, or "no" to reject, a proposal
@@ -50,8 +50,9 @@ module {
     system_params : SystemParams
   };
 
-  public let oneToken = { amount_e8s = 10_000_000 };
-  public let zeroToken = { amount_e8s = 0 };
+  public let one_token : Tokens = 100_000_000;
+  public let one_hundred_tokens : Tokens = 10_000_000_000;
+  public let zero_token : Tokens = 0;
 
   public type NeuronState = {
     #Locked;

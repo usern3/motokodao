@@ -22,8 +22,8 @@ let promise = get_all_proposals();
     {:then proposals}
       <div class="flex flex-col gap-y-8">
         <h1 class="text-black mb-4 text-xl uppercase font-black">Proposals</h1>
-        {#each proposals.ok as proposal}
-          <Proposal proposal="{proposal}" />
+        {#each proposals.ok as proposal(proposal.id)}
+          <Proposal proposal={proposal} />
           <div class="w-full border border-b" />
         {/each}
       </div>

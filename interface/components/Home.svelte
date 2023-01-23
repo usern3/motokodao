@@ -7,5 +7,6 @@ import motoko from "../assets/motoko.gif";
     <img class="w-2/3" src="{motoko}" />
   </div>
   <div class="flex w-full justify-center">
-    <h2 class="text-5xl font-black text-black uppercase">Motoko DAO Project</h2>
+    <h2 class="text-5xl font-black uppercase text-black">Motoko DAO Project</h2>
+  </div>
 </main>

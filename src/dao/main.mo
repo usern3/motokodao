@@ -12,6 +12,7 @@ import Blob "mo:base/Blob";
 import Array "mo:base/Array";
 import Hash "mo:base/Hash";
 import Text "mo:base/Text";
+import Proposal "helpers/Proposal";
 
 actor {
   stable var next_proposal_id : Nat = 0;
@@ -20,17 +21,20 @@ actor {
   
   let Ledger : actor { 
         icrc1_balance_of: (Types.Account) -> async Nat;
-    } = actor("r7inp-6aaaa-aaaaa-aaabq-cai");
+    } = actor("db3eq-6iaaa-aaaah-abz6a-cai");
 
-  let Webpage : actor { set_text: (Text) -> async ();} = actor("rkp4c-7iaaa-aaaaa-aaaca-cai");
+  let Webpage : actor { set_last_proposal: (Nat) -> async ();} = actor("b7kpk-xyaaa-aaaal-qbska-cai");
 
   let neurons = HashMap
     .fromIter<Principal, Types.Neuron>(neuron_entries.vals(), Iter.size(neuron_entries.vals()), Principal.equal, Principal.hash);
 
-func natHash(n : Nat) : Hash.Hash { 
-        Text.hash(Nat.toText(n));
-    };
+  func natHash(n : Nat) : Hash.Hash { 
+    Text.hash(Nat.toText(n));
+  };
+
   let proposals = HashMap.fromIter<Nat, Types.Proposal>(proposalEntries.vals(), Iter.size(proposalEntries.vals()), Nat.equal, natHash);
+  let threshold_acceptance: Float = 100;
+  let threshold_rejection: Float = -threshold_acceptance;
 
   func proposal_get(id : Nat) : ?Types.Proposal = proposals.get(id);
   
@@ -43,7 +47,10 @@ func natHash(n : Nat) : Hash.Hash {
   };
 
   public shared ({ caller }) func submit_proposal(payload : Types.ProposalPayload) : async Types.Result<Text, Text> {
-    Debug.print("Principal: " # Principal.toText(caller));
+    var voting_power = await Ledger.icrc1_balance_of({ owner = caller; });
+    if(voting_power < Types.one_hundred_tokens){
+      return #err("You must hold at least 1 MB token to create a proposal.");
+    };
     let proposal_id = next_proposal_id;
     next_proposal_id += 1;
 
@@ -53,8 +60,8 @@ func natHash(n : Nat) : Hash.Hash {
       proposer = caller;
       payload;
       state = #open;
-      votes_yes = Types.zeroToken;
-      votes_no = Types.zeroToken;
+      votes_yes = Types.zero_token;
+      votes_no = Types.zero_token;
       voters = List.nil();
     };
 
@@ -75,8 +82,7 @@ func natHash(n : Nat) : Hash.Hash {
         return #err("Proposal does not exist");
       };
       case(?proposal) {
-        let hasVoted : ?Principal = List.find<Principal>(proposal.voters, func x = Principal.toText(x) == Principal.toText(caller));
-        switch(hasVoted){
+        switch(Proposal.hasVoted(caller, proposal)){
           case(null){};
           case(?hasVoted){
             return #err("User already voted on this proposal");
@@ -86,13 +92,25 @@ func natHash(n : Nat) : Hash.Hash {
         var voting_power = await Ledger.icrc1_balance_of({ owner = caller; });
 
         var new_vote_count : Nat = 0;
-        var votes_yes : Types.Tokens = { amount_e8s = proposal.votes_yes.amount_e8s; };
-        var votes_no : Types.Tokens = { amount_e8s = proposal.votes_no.amount_e8s; };
+        var votes_yes : Types.Tokens = proposal.votes_yes;
+        var votes_no : Types.Tokens = proposal.votes_no;
+        var state : Types.ProposalState = proposal.state;
+        
+        if (proposal.state != #open) {
+          return #err("Proposal is not open for voring");
+        };
 
         if (yes_or_no){
-          votes_yes := { amount_e8s = proposal.votes_yes.amount_e8s  + voting_power; };
+          votes_yes := proposal.votes_yes  + voting_power;
+          if(votes_yes > Types.one_hundred_tokens){
+            state := #accepted;
+            await Webpage.set_last_proposal(proposal.id);
+          }
         } else {
-          votes_no := { amount_e8s = proposal.votes_no.amount_e8s  + voting_power; };
+          votes_no := proposal.votes_no  + voting_power;
+          if(votes_no > Types.one_hundred_tokens){
+            state := #accepted;
+          }
         };
         
         let new_voters : List.List<Principal> = List.push(caller, proposal.voters);
@@ -104,7 +122,7 @@ func natHash(n : Nat) : Hash.Hash {
           votes_yes = votes_yes; 
           votes_no = votes_no; 
           proposer = proposal.proposer; 
-          state = #open; 
+          state = state; 
           timestamp = proposal.timestamp
         };
         proposals.put(proposal.id, updated_proposal);

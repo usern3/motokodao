@@ -1,4 +1,4 @@
-type Tokens = record {amount_e8s: nat;};
+type Tokens = nat;
 type Result_3 = 
  variant {
    err: text;
