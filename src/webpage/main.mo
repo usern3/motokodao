@@ -1,32 +1,41 @@
-import Principal "mo:base/Principal";
-import Http "./helpers/Http";
+import Http "helpers/Http";
 import Text "mo:base/Text";
+import CertifiedData "mo:base/CertifiedData";
+import HashTree "helpers/HashTree";
+import Principal "mo:base/Principal";
 
 actor {
-  public type HttpRequest = Http.HttpRequest;
-  public type HttpResponse = Http.HttpResponse;
-
   let dao_canister_principal : Principal = Principal.fromText("bnmyt-3iaaa-aaaal-qbsja-cai");
-  var last_proposal_id : Nat = 0;
+  
+  stable var current_text : Blob = Text.encodeUtf8("");
 
-  public query func http_request(req : HttpRequest) : async HttpResponse {
+  public shared ({ caller }) func set_text(new_text : Text) : async () {
+    assert (caller == dao_canister_principal);
+
+    current_text := Text.encodeUtf8(new_text);
+    update_verified_vars();
+  };
+
+  /// HTTP request handler
+  public query func http_request(req : Http.HttpRequest) : async Http.HttpResponse {
     return ({
-      body = Text.encodeUtf8("This is a cool page");
-      headers = [];
+      body = current_text;
+      headers = [
+        ("content-type", "text/plain"),
+        HashTree.certification_header(current_text),
+      ];
       status_code = 200;
       streaming_strategy = null;
     });
   };
 
-
-  public query func last_proposal() : async Nat {
-    return last_proposal_id;
+  /// verify vars after each upgrade
+  system func postupgrade() {
+    update_verified_vars();
   };
 
-  public shared ({caller}) func set_last_proposal(id: Nat) : () {
-    if (caller != dao_canister_principal) {
-      return;
-    };
-    last_proposal_id := id;
+  /// call function to update verification of vars
+  private func update_verified_vars() {
+    HashTree.update_asset_hash(current_text);
   };
 };

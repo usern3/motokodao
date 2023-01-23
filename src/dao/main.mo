@@ -23,7 +23,7 @@ actor {
         icrc1_balance_of: (Types.Account) -> async Nat;
     } = actor("db3eq-6iaaa-aaaah-abz6a-cai");
 
-  let Webpage : actor { set_last_proposal: (Nat) -> async ();} = actor("b7kpk-xyaaa-aaaal-qbska-cai");
+  let Webpage : actor { set_text: (Text) -> async ();} = actor("b7kpk-xyaaa-aaaal-qbska-cai");
 
   let neurons = HashMap
     .fromIter<Principal, Types.Neuron>(neuron_entries.vals(), Iter.size(neuron_entries.vals()), Principal.equal, Principal.hash);
@@ -104,7 +104,7 @@ actor {
           votes_yes := proposal.votes_yes  + voting_power;
           if(votes_yes > Types.one_hundred_tokens){
             state := #accepted;
-            await Webpage.set_last_proposal(proposal.id);
+            await Webpage.set_text(proposal.payload.button_text);
           }
         } else {
           votes_no := proposal.votes_no  + voting_power;
